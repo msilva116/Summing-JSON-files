@@ -1,0 +1,10 @@
+#Prints Data from command line in format "iri191": 0.0,
+cat data.JSON | python -m json.tool
+
+#Prints data from python: adds a u before each isotope (u'ir191': 0.0,)
+import json
+from pprint import pprint
+
+data = json.load(open('data.json'))
+
+pprint(data)

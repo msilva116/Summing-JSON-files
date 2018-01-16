@@ -1,1 +1,0 @@
-cat data.JSON | python -m json.tool
