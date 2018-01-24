@@ -10,13 +10,31 @@
 #======================================================================
 
 import json
+import sys, argparse
+
+if sys.version_info < (3, 0):
+  raise ("Python version must be > 3.0 to use this script.")
+
+# Read in particle data file from command line using argparse
+
+parser = argparse.ArgumentParser(description='Read nucleosynthetic yields from particle data output in JSON format.')
+
+parser.add_argument('filename', metavar='JSON particle filename', type=str, nargs='+', help='JSON file to analyze')
+
+args = parser.parse_args()
+
+jsonfile = args.filename [0]   # note this is a list of arguments, possibly including more than one file
 
 # Read particle data in as JSON format
-particle_list = json.load(open('data.JSON'))
+
+particle_list = json.load (open (jsonfile) )
 
 # Initialize empty dictionary for mean abundances
 
 mean_abundance = {}
+
+# Initialize mean abundances to 0 for each isotope, as obtained from
+#  the zeroeth particle
 
 for isotope in particle_list [0]:
   mean_abundance [isotope] = 0.0
@@ -35,4 +53,4 @@ for isotope in mean_abundance:
 # Use a lambda function to print out the dictionary of mean abundances,
 # sorted by value, in reverse order, e.g. from largest to smallest
 
-print sorted(mean_abundance.items(), key=lambda x:x[1], reverse=True )
+print (sorted (mean_abundance.items(), key=lambda x:x[1], reverse=True ) )
